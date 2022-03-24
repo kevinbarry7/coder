@@ -1,0 +1,177 @@
+---
+title: "R Notebook"
+output:
+  pdf_document: default
+  html_notebook: default
+  word_document: default
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
+
+```{r}
+plot(cars)
+head(cars)
+cars1 <- cars
+```
+
+Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
+
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Ctrl+Shift+K* to preview the HTML file).
+
+The preview shows you a rendered HTML copy of the contents of the editor. Con=sequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
+
+
+```{r}
+library(tidyverse)
+library(ggplot2)
+head(ChickWeight)
+ggplot(data=ChickWeight) +
+geom_smooth(mapping=aes(x=Time, y=weight, color=Diet))
+
+```
+
+
+
+
+```{r}
+#vectors
+
+names <- c('Kevin', 'April', 'Sean', 'Mary')
+scores <- c(85, 92, 45, 97)
+names[1]
+scores[3]
+
+mean(scores)
+median(scores)
+max(scores)
+min(scores)
+
+
+testresults <- data.frame(names, scores)
+testresults
+
+class(names)
+class(scores)
+```
+
+
+
+```{r}
+productCategories <- c('apple', 'orange', 'banana')
+class(productCategories)
+productCategories <- factor(productCategories)
+class(productCategories)
+length(productCategories)
+
+is.character(productCategories)
+
+num <- 10L
+is.numeric(num)
+is.integer(num)
+```
+
+
+```{r}
+library(readr)
+library(dplyr)
+vehicles <- read_csv('vehicles.csv', col_types = "nnnfnfffffnn")
+glimpse(vehicles)
+
+```
+
+```{r}
+summary(vehicles)
+```
+
+```{r}
+select(vehicles, class, model)
+
+```
+
+
+```{r}
+summary(select(vehicles, class, model))
+```
+
+
+```{r}
+table(select(vehicles, class))
+```
+
+```{r}
+
+prop.table(table(select(vehicles, class)))
+
+
+```
+
+
+```{r}
+#using the pipe command & select function
+
+vehicles %>%
+  select(class) %>%
+  table() %>%
+  prop.table()
+```
+
+
+```{r}
+# use of the filter command
+
+vehicles %>%
+  filter(drive == "2-Wheel Drive") %>%
+  select(co2emissions) %>%
+  summary()
+
+```
+
+
+```{r}
+# concept of comparison
+vehicles %>%
+  ggplot() +
+  geom_boxplot(mapping = aes(x = class, y=co2emissions), fill="red") +
+  labs(title = "Boxplot of CO2 Emissions by Vehicle Class", x= "Class", y="CO2 Emissions")
+```
+
+
+```{r}
+#concept of relationship
+
+vehicles %>%
+  ggplot() +
+  geom_point(mapping = aes(x = citympg, y = co2emissions), color = "blue", size=2) +
+  labs(title = "Scatterplot of CO2 Emissions vs. City Miles per Gallon", x = "City MPG",
+       y = "CO2 Emissions")
+```
+
+
+```{r}
+# concept of distrbution
+
+vehicles %>%
+  ggplot() +
+  geom_histogram(mapping = aes(x = co2emissions), bins = 30, fill = "yellow", color = "black") +
+  labs(title = "Histogram of CO2 Emissions", x = "CO2 Emissions", y = "Frequency")
+```
+
+
+```{r}
+# concept of composition
+
+vehicles %>%
+  ggplot() +
+  geom_bar(mapping = aes(x = year, fill = drive), color = "black") +
+  labs(title = "Stacked Bar Chart of Drive Type Composition by Year", x = "Model Year",
+       y = "Number of Cars") +
+  coord_flip()
+```
+
+
+```{r}
+
+```
+
